@@ -69,16 +69,18 @@
         #hud {
             position: absolute;
             top: 0; left: 0; width: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             color: white;
             text-align: center;
-            padding: 10px 0;
+            padding: 10px 0 8px 0;
             z-index: 10;
             pointer-events: none;
         }
         #hud h1 { margin: 0; font-size: 22px; letter-spacing: 1px; }
-        #hud p { margin: 5px 0 5px 0; font-size: 14px; color: #ffcc00;}
+        #hud p { margin: 3px 0; font-size: 14px; color: #ffcc00;}
+        #hud .sub-header { font-size: 16px; font-weight: bold; color: #fff; margin: 2px 0 5px 0;}
         #score-display { margin: 0; font-size: 18px; font-weight: bold; color: #32CD32; }
+        
         #mobile-controls {
             position: absolute;
             bottom: 20px; left: 0; width: 100%;
@@ -107,18 +109,19 @@
             box-shadow: 8px 8px 0 rgba(0,0,0,1);
             font-family: Arial, sans-serif; color: #333;
         }
-        #modal-content h3 { color: #d32f2f; border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-top: 0;}
+        /* Changed from red to blue */
+        #modal-content h3 { color: #0056b3; border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-top: 0;}
         #modal-content h4 { margin: 15px 0 5px 0; color: #111;}
         #modal-content em { color: #555; font-size: 14px; }
         #modal-content p, #modal-content ul { line-height: 1.5; font-size: 15px; }
         #modal-content li { margin-bottom: 8px; }
         .close-btn {
             display: block; width: 100%; margin-top: 20px; padding: 12px;
-            background: #d32f2f; color: white; text-align: center;
+            background: #0056b3; color: white; text-align: center; /* Changed to match headers */
             font-weight: bold; font-size: 16px; border: 2px solid black;
             border-radius: 5px; cursor: pointer; text-transform: uppercase;
         }
-        .close-btn:hover { background: #b71c1c; }
+        .close-btn:hover { background: #003d82; }
         @media(min-width: 800px) { #mobile-controls { display: none; } }
     </style>
 </head>
@@ -141,6 +144,7 @@
     <div id="hud">
         <h1>SEAN DAVID SOMMER</h1>
         <p>Vista, CA 92083 | 760-420-1807 | MusicManSean@me.com</p>
+        <div class="sub-header">Qualifications and Experience Summary</div>
         <div id="score-display">SECTIONS FOUND: 0 / 5</div>
     </div>
 
@@ -197,7 +201,7 @@
     }
 
     function playBGM() {
-        if(isPaused) return; // Don't play music when modal is open
+        if(isPaused) return; 
         playTone(bgmNotes[bgmIndex], 'triangle', 0.15, 0.03);
         bgmIndex = (bgmIndex + 1) % bgmNotes.length;
     }
@@ -207,9 +211,7 @@
         bump: () => playTone(100, 'square', 0.1, 0.05),
         block: () => playTone(800, 'square', 0.1, 0.05, 1200),
         mushroomSpawn: () => {
-            playTone(300, 'square', 0.1);
-            setTimeout(()=>playTone(400, 'square', 0.1), 100);
-            setTimeout(()=>playTone(500, 'square', 0.2), 200);
+            playTone(300, 'square', 0.1); setTimeout(()=>playTone(400, 'square', 0.1), 100); setTimeout(()=>playTone(500, 'square', 0.2), 200);
         },
         grow: () => {
             playTone(200, 'square', 0.1); setTimeout(()=>playTone(250, 'square', 0.1), 100);
@@ -218,8 +220,7 @@
         },
         flagpole: () => playTone(600, 'square', 0.8, 0.05, 150),
         castle: () => {
-            playTone(400, 'square', 0.1); setTimeout(()=>playTone(500, 'square', 0.1), 150);
-            setTimeout(()=>playTone(600, 'square', 0.4), 300);
+            playTone(400, 'square', 0.1); setTimeout(()=>playTone(500, 'square', 0.1), 150); setTimeout(()=>playTone(600, 'square', 0.4), 300);
         }
     };
 
@@ -228,7 +229,7 @@
     const ctx = canvas.getContext('2d');
 
     let worldWidth = 3200;
-    let groundHeight = 60;
+    let groundHeight = 120; // Increased ground height to keep mobile buttons clear
     let isPaused = true;
     let cameraX = 0;
     let animationFrame = 0;
@@ -236,7 +237,7 @@
     let blocksCollected = 0;
     let isSliding = false;
     let flagGrabbed = false;
-    let pendingMushroomSpawn = null; // Tracks if a block needs to spit out a mushroom
+    let pendingMushroomSpawn = null; 
 
     const player = {
         x: 50, y: 100, baseW: 30, baseH: 40, w: 30, h: 40,
@@ -244,7 +245,7 @@
         grounded: false, moving: false, dir: 1, isBig: false
     };
 
-    const mushroom = { active: false, x: 0, y: 0, w: 20, h: 20, vx: 2, vy: 0 };
+    const mushroom = { active: false, x: 0, y: 0, w: 34, h: 34, vx: 2, vy: 0 }; // Increased Mushroom Size
 
     const blocks = [
         { id: 'summary', text: 'SUMMARY', x: 250, y: 0, w: 120, h: 40, hitTimer: 0, color: '#F8B400', visited: false },
@@ -256,7 +257,7 @@
     ];
 
     let stairs = [];
-    let flagpole = { x: 2500, y: 0, w: 10, h: 300 };
+    let flagpole = { x: 2550, y: 0, w: 10, h: 300 }; // Moved back for a harder jump
     let castleX = 2800; 
 
     const clouds = [
@@ -268,7 +269,7 @@
 
     window.startGame = function() {
         document.getElementById('start-overlay').style.display = 'none';
-        initAudio(); // Start sound engine upon interaction
+        initAudio(); 
         isPaused = false;
     }
 
@@ -458,7 +459,7 @@
                 <div style="background: #f4f4f4; padding: 20px; border-radius: 8px; display: inline-block; margin-top: 15px; border: 3px solid #000;">
                     <strong style="font-size: 18px;">Contact Information:</strong><br><br>
                     <strong>Phone:</strong> 760-420-1807<br>
-                    <strong>Email:</strong> <a href="mailto:MusicManSean@me.com" style="color: #d32f2f; text-decoration: none; font-weight: bold;">MusicManSean@me.com</a>
+                    <strong>Email:</strong> <a href="mailto:MusicManSean@me.com" style="color: #0056b3; text-decoration: none; font-weight: bold;">MusicManSean@me.com</a>
                 </div>
                 <p style="margin-top: 20px; font-weight: bold; font-size: 14px; color: #888;">Walk right to enter the castle and start over!</p>
             </div>
@@ -472,11 +473,10 @@
         keys.jump = false; 
         isPaused = false;
 
-        // Spawn mushroom if the 5th block was just hit
         if (pendingMushroomSpawn) {
             mushroom.active = true;
-            mushroom.x = pendingMushroomSpawn.x + (pendingMushroomSpawn.w / 2) - 10;
-            mushroom.y = pendingMushroomSpawn.y - 20; // Spawn above block
+            mushroom.x = pendingMushroomSpawn.x + (pendingMushroomSpawn.w / 2) - (mushroom.w / 2);
+            mushroom.y = pendingMushroomSpawn.y - mushroom.h - 5; 
             mushroom.vy = -5; // Small pop upward
             sfx.mushroomSpawn();
             pendingMushroomSpawn = null;
@@ -518,15 +518,10 @@
 
     function drawMushroom() {
         if (!mushroom.active) return;
-        ctx.fillStyle = '#fff'; // stem
-        ctx.fillRect(mushroom.x + 4, mushroom.y + 10, 12, 10);
-        ctx.fillStyle = '#ff0000'; // cap
-        ctx.beginPath();
-        ctx.arc(mushroom.x + 10, mushroom.y + 10, 10, Math.PI, 0);
-        ctx.fill();
-        ctx.fillStyle = '#fff'; // spots
-        ctx.fillRect(mushroom.x + 4, mushroom.y + 4, 4, 4);
-        ctx.fillRect(mushroom.x + 12, mushroom.y + 4, 4, 4);
+        let mx = mushroom.x; let my = mushroom.y; let mw = mushroom.w; let mh = mushroom.h;
+        ctx.fillStyle = '#fff'; ctx.fillRect(mx + mw*0.2, my + mh*0.5, mw*0.6, mh*0.5); // stem
+        ctx.fillStyle = '#ff0000'; ctx.beginPath(); ctx.arc(mx + mw/2, my + mh*0.5, mw/2, Math.PI, 0); ctx.fill(); // cap
+        ctx.fillStyle = '#fff'; ctx.fillRect(mx + mw*0.2, my + mh*0.15, mw*0.2, mh*0.2); ctx.fillRect(mx + mw*0.6, my + mh*0.15, mw*0.2, mh*0.2); // spots
     }
 
     function draw() {
@@ -536,14 +531,22 @@
 
         clouds.forEach(c => drawCloud(c.x, c.y));
 
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'; ctx.font = '24px Courier New'; ctx.fontWeight = 'bold';
-        ctx.fillText("Hit the blocks from below to read!", 50, canvas.height / 2 - 10);
+        // Sky Text
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'; 
+        ctx.font = 'bold 36px Courier New'; 
+        ctx.textAlign = 'left';
+        ctx.fillText("Sean Sommer’s Interactive Resume", 80, canvas.height / 2 - 120);
+        
+        ctx.font = 'bold 24px Courier New'; 
+        ctx.fillText("Hit the blocks from below to read!", 80, canvas.height / 2 - 60);
         ctx.fillText("Keep going right! ➡", 1000, canvas.height / 2);
+        
         ctx.fillStyle = '#32CD32'; ctx.fillText("Hit to Download PDF ⬇", 1900, canvas.height / 2 - 50);
         ctx.fillStyle = '#FFF'; ctx.fillText("Enter to Loop ➡", castleX - 100, canvas.height / 2 - 20);
 
         drawStairs(); drawFlagpole(); drawCastle(castleX, canvas.height - groundHeight); drawMushroom();
 
+        // Solid Ground (extended downward)
         ctx.fillStyle = '#8B4513'; ctx.fillRect(0, canvas.height - groundHeight, worldWidth, groundHeight);
         ctx.fillStyle = '#228B22'; ctx.fillRect(0, canvas.height - groundHeight, worldWidth, 15);
 
@@ -564,16 +567,12 @@
     function drawPlayer(x, y, dir, isBig) {
         ctx.save();
         ctx.translate(x, y);
-        if (isBig) ctx.scale(1.5, 1.5); // Scale drawing by 1.5x if big
+        if (isBig) ctx.scale(1.5, 1.5); 
         
-        // Shirt/Overalls
-        ctx.fillStyle = '#0000FF'; ctx.fillRect(6, 20, 18, 14);
-        // Face
-        ctx.fillStyle = '#FFDAB9'; ctx.fillRect(4, 8, 22, 12);
-        // Hat
-        ctx.fillStyle = '#FF0000'; ctx.fillRect(2, 0, 22, 8);
+        ctx.fillStyle = '#0000FF'; ctx.fillRect(6, 20, 18, 14); // Shirt
+        ctx.fillStyle = '#FFDAB9'; ctx.fillRect(4, 8, 22, 12); // Face
+        ctx.fillStyle = '#FF0000'; ctx.fillRect(2, 0, 22, 8); // Hat
         
-        // Directional rendering
         if (isSliding) {
             ctx.fillRect(24, 4, 8, 4); ctx.fillStyle = '#000'; ctx.fillRect(20, 10, 4, 4); 
         } else if (dir === 1) { 
@@ -582,13 +581,11 @@
             ctx.fillRect(-2, 4, 8, 4); ctx.fillStyle = '#000'; ctx.fillRect(6, 10, 4, 4); ctx.fillRect(2, 16, 10, 4); 
         }
 
-        // Arms
-        ctx.fillStyle = '#FF0000';
+        ctx.fillStyle = '#FF0000'; // Arms
         if (isSliding) { ctx.fillRect(15, 20, 15, 6); } 
         else { ctx.fillRect(0, 20, 6, 10); ctx.fillRect(24, 20, 6, 10); }
 
-        // Legs
-        ctx.fillStyle = '#8B4513'; 
+        ctx.fillStyle = '#8B4513'; // Legs
         if (isSliding) { ctx.fillRect(10, 34, 15, 6); } 
         else if (!player.grounded) { ctx.fillRect(2, 34, 10, 6); ctx.fillRect(18, 30, 10, 6); } 
         else if (player.moving && Math.floor(animationFrame / 5) % 2 === 0) { ctx.fillRect(8, 34, 10, 6); ctx.fillRect(20, 32, 10, 6); } 
@@ -606,4 +603,4 @@
 
 </script>
 </body>
-</html> 
+</html>
