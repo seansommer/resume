@@ -34,6 +34,26 @@
             padding: 40px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* PDF Button Styling */
+        .pdf-button {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            background-color: var(--accent);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .pdf-button:hover {
+            background-color: #076aba;
         }
 
         header {
@@ -95,7 +115,6 @@
             margin-bottom: 5px;
         }
 
-        /* Interactive Experience Section */
         .experience-item {
             margin-bottom: 15px;
             border: 1px solid #ddd;
@@ -135,7 +154,7 @@
         }
 
         .exp-content.active {
-            max-height: 1000px; /* Large enough for content */
+            max-height: 1000px;
             border-top: 1px solid #eee;
         }
 
@@ -166,10 +185,10 @@
             color: #999;
         }
 
-        /* Mobile Adjustments */
         @media (max-width: 600px) {
             .container { padding: 20px; }
             h1 { font-size: 1.8rem; }
+            .pdf-button { position: static; display: block; width: 100%; text-align: center; margin-bottom: 20px; }
             .exp-header { flex-direction: column; align-items: flex-start; }
             .indicator { align-self: flex-end; }
         }
@@ -178,6 +197,8 @@
 <body>
 
 <div class="container">
+    <a href="sean_sommer_resume.pdf" class="pdf-button" download>Download PDF</a>
+
     <header>
         <h1>Sean David Sommer</h1>
         <div class="contact-info">
@@ -311,11 +332,7 @@
     function toggleExp(element) {
         const content = element.nextElementSibling;
         const indicator = element.querySelector('.indicator');
-        
-        // Toggle the active class
         content.classList.toggle('active');
-        
-        // Update indicator
         if (content.classList.contains('active')) {
             indicator.textContent = '−';
             element.style.background = '#f0f7ff';
