@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sean David Sommer - Resume</title>
+    <style>
+        :root {
+            --primary: #2d3436;
+            --accent: #0984e3;
+            --bg: #f9f9f9;
+            --text: #333;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* PDF Button Styling */
+        .pdf-button {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            background-color: var(--accent);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .pdf-button:hover {
+            background-color: #076aba;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .contact-info {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .contact-info a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        h2 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            border-left: 4px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        .summary p {
+            font-style: italic;
+            color: #555;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-item {
+            background: #f1f2f6;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .skill-item strong {
+            display: block;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .experience-item {
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .exp-header {
+            background: #fff;
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .exp-header:hover {
+            background: #f0f7ff;
+        }
+
+        .exp-title h3 {
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        .exp-meta {
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        .exp-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background: #fff;
+        }
+
+        .exp-content.active {
+            max-height: 1000px;
+            border-top: 1px solid #eee;
+        }
+
+        .exp-body {
+            padding: 20px;
+        }
+
+        .exp-body ul {
+            list-style-type: square;
+            margin-left: 20px;
+        }
+
+        .exp-body li {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .indicator {
+            font-weight: bold;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.8rem; }
+            .pdf-button { position: static; display: block; width: 100%; text-align: center; margin-bottom: 20px; }
+            .exp-header { flex-direction: column; align-items: flex-start; }
+            .indicator { align-self: flex-end; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="sean_sommer_resume.pdf" class="pdf-button" download>Download PDF</a>
+
+    <header>
+        <h1>Sean David Sommer</h1>
+        <div class="contact-info">
+            Vista, CA 92083 | 760-420-1807 | <a href="mailto:MusicManSean@me.com">MusicManSean@me.com</a>
+        </div>
+    </header>
+
+    <section class="summary">
+        <h2>Professional Summary</h2>
+        <p>I am a well-rounded professional with more than ten years of experience supporting office operations, customer service, inventory management, and business administration. My background spans fast-paced retail, warehouse, and compliance driven environments, including hands-on technical support and inventory management at Apple, high-volume inventory and merchandising work at Costco, and full-cycle operations for a California based compliance company. I am dependable, easy to work with, and committed to delivering high-quality service as part of a team.</p>
+    </section>
+
+    <section class="skills">
+        <h2>Technical Skills & Core Competencies</h2>
+        <div class="skills-grid">
+            <div class="skill-item"><strong>Customer Service</strong> Conflict Resolution, Project Management Software, Client Relationship Management.</div>
+            <div class="skill-item"><strong>Administration</strong> Accounts Payable/Receivable, Inventory Management, Project Coordination, Human Resources.</div>
+            <div class="skill-item"><strong>Inventory, Warehouse & Logistics</strong> End-to-end inventory management, order processing, shipping and receiving, warehouse organization, cycle counts, and certified forklift operation.</div>
+            <div class="skill-item"><strong>Technical</strong> MacOS & Windows Troubleshooting, Adobe Creative Suite (Audio/Video), Microsoft Office (Excel, Word).</div>
+            <div class="skill-item"><strong>Remote Collaboration</strong> Zoom, Slack, Microsoft Teams, Google Workspace, Dropbox.</div>
+        </div>
+    </section>
+
+    <section class="experience">
+        <h2>Professional Experience</h2>
+        <p style="font-size: 0.8rem; color: #888; margin-bottom: 10px;">(Click a role to explore details)</p>
+
+        <div class="experience-item">
+            <div class="exp-header" onclick="toggleExp(this)">
+                <div class="exp-title">
+                    <h3>Digital Media Producer & Community Manager</h3>
+                    <div class="exp-meta">Self-Employed / Remote | Nov 2017 – Present</div>
+                </div>
+                <div class="indicator">+</div>
+            </div>
+            <div class="exp-content">
+                <div class="exp-body">
+                    <ul>
+                        <li><strong>Content Production:</strong> Utilized advanced audio and video editing software to create high-quality digital content, growing a subscriber base through consistent output.</li>
+                        <li><strong>Community Support:</strong> Managed all community interactions, responding to user comments and inquiries promptly and professionally to foster audience loyalty.</li>
+                        <li><strong>Analytics & Strategy:</strong> Analyzed viewer data and engagement metrics to optimize content strategy, similar to analyzing customer satisfaction scores in a corporate environment.</li>
+                        <li><strong>Remote Operations:</strong> Successfully designed, built, implemented and managed a fully remote workflow, demonstrating self-discipline, time management, and the ability to meet strict publication deadlines without supervision.</li>
+                        <li><strong>Accounting & Tax Reporting:</strong> Maintained accurate financial records, tracked income and expenses, prepared reports for tax filing, and coordinated required documentation to support ongoing compliance.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="experience-item">
+            <div class="exp-header" onclick="toggleExp(this)">
+                <div class="exp-title">
+                    <h3>General Manager & Office Administrator</h3>
+                    <div class="exp-meta">Diesel Pollution Solutions, Inc. | Feb 2011 – Nov 2017</div>
+                </div>
+                <div class="indicator">+</div>
+            </div>
+            <div class="exp-content">
+                <div class="exp-body">
+                    <ul>
+                        <li><strong>Office Administration:</strong> Directed daily business operations, including phone screening, scheduling, and digital record keeping for maintaining customer’s compliance for CARB.</li>
+                        <li><strong>Financial Management:</strong> Managed Accounts Payable/Receivable, processed invoices, and handled payroll reporting using accounting software.</li>
+                        <li><strong>Client Relations:</strong> Primary point of contact for key accounts, resolving complex client issues regarding California pollution regulations.</li>
+                        <li><strong>Project Management:</strong> Responsible for technicians and compliance projects, ensuring all deliverables met strict state regulatory deadlines.</li>
+                        <li><strong>Warehouse Management:</strong> Managed diesel truck filter and parts inventory from end to end, including ordering, stock control, and cycle counts. Handled shipping and receiving, organized warehouse layout, and safely operated forklifts as a certified operator.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="experience-item">
+            <div class="exp-header" onclick="toggleExp(this)">
+                <div class="exp-title">
+                    <h3>Operations Specialist</h3>
+                    <div class="exp-meta">Apple Retail | Aug 2009 – 2011</div>
+                </div>
+                <div class="indicator">+</div>
+            </div>
+            <div class="exp-content">
+                <div class="exp-body">
+                    <ul>
+                        <li><strong>Inventory Control:</strong> Managed high-value inventory, shipping, and receiving processes with near-zero error rates.</li>
+                        <li><strong>Technical Workflow:</strong> Utilized Apple proprietary software and handheld devices to track stock levels and fulfill customer orders efficiently.</li>
+                        <li><strong>Team Collaboration:</strong> Communicated effectively with the sales and technical support teams (Genius Bar) to ensure seamless customer experiences.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="experience-item">
+            <div class="exp-header" onclick="toggleExp(this)">
+                <div class="exp-title">
+                    <h3>Merchandiser</h3>
+                    <div class="exp-meta">Costco Wholesale | Nov 2007 – 2009</div>
+                </div>
+                <div class="indicator">+</div>
+            </div>
+            <div class="exp-content">
+                <div class="exp-body">
+                    <ul>
+                        <li>Supported warehouse operations, working across the cooler and front-end areas to ensure efficient product flow and customer support.</li>
+                        <li>Maintained visual merchandising standards in a high-volume warehouse environment.</li>
+                        <li>Consistently demonstrated reliability and efficiency in stocking and organizing products to maximize sales potential.</li>
+                        <li>Operated safely in a fast-paced team environment, adhering to strict corporate safety protocols.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="education">
+        <h2>Education</h2>
+        <p><strong>Associate Level Coursework</strong> | MiraCosta Community College (2005 – 2007)<br>
+        Focus: General Education</p>
+    </section>
+
+    <section class="projects">
+        <h2>Projects & Interests</h2>
+        <div class="skills-grid">
+            <div class="skill-item"><strong>Audio/Video Engineering</strong> Proficient in recording, mixing, and editing digital media.</div>
+            <div class="skill-item"><strong>Web Development</strong> Experience with website design and graphic layout.</div>
+            <div class="skill-item"><strong>Music</strong> Songwriting, recording, and guitar.</div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 Sean David Sommer
+    </footer>
+</div>
+
+<script>
+    function toggleExp(element) {
+        const content = element.nextElementSibling;
+        const indicator = element.querySelector('.indicator');
+        content.classList.toggle('active');
+        if (content.classList.contains('active')) {
+            indicator.textContent = '−';
+            element.style.background = '#f0f7ff';
+        } else {
+            indicator.textContent = '+';
+            element.style.background = '#fff';
+        }
+    }
+</script>
+
+</body>
+</html>
