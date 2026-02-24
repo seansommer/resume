@@ -8,26 +8,23 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #5c94fc; /* Retro sky blue */
+            background-color: #5c94fc;
             font-family: 'Courier New', Courier, monospace;
             overflow: hidden;
-            touch-action: none; /* Prevent scroll on mobile */
+            touch-action: none;
             user-select: none;
             -webkit-user-select: none;
         }
-
         #gameCanvas {
             display: block;
             width: 100vw;
             height: 100vh;
         }
-
-        /* Start Screen Overlay */
         #start-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85);
-            z-index: 50; /* Above everything */
+            z-index: 50;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -69,13 +66,9 @@
             margin-top: 15px;
             font-size: 14px;
         }
-
-        /* Persistent Header / HUD */
         #hud {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+            top: 0; left: 0; width: 100%;
             background: rgba(0, 0, 0, 0.7);
             color: white;
             text-align: center;
@@ -86,60 +79,33 @@
         #hud h1 { margin: 0; font-size: 22px; letter-spacing: 1px; }
         #hud p { margin: 5px 0 5px 0; font-size: 14px; color: #ffcc00;}
         #score-display { margin: 0; font-size: 18px; font-weight: bold; color: #32CD32; }
-
-        /* Mobile On-Screen Controls */
         #mobile-controls {
             position: absolute;
-            bottom: 20px;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 20px;
-            box-sizing: border-box;
-            z-index: 20;
+            bottom: 20px; left: 0; width: 100%;
+            display: flex; justify-content: space-between;
+            padding: 0 20px; box-sizing: border-box; z-index: 20;
         }
         .btn-group { display: flex; gap: 15px; }
         .ctrl-btn {
-            width: 65px;
-            height: 65px;
+            width: 65px; height: 65px;
             background: rgba(255, 255, 255, 0.4);
-            border: 3px solid white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            color: black;
-            font-weight: bold;
-            cursor: pointer;
+            border: 3px solid white; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 24px; color: black; font-weight: bold; cursor: pointer;
         }
         .ctrl-btn:active { background: rgba(255, 255, 255, 0.8); }
-
-        /* Modal Overlay for Resume Content */
         #modal-overlay {
-            display: none;
-            position: absolute;
+            display: none; position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 30;
-            justify-content: center;
-            align-items: center;
+            background: rgba(0,0,0,0.7); z-index: 30;
+            justify-content: center; align-items: center;
         }
         #modal-content {
-            background: #fff;
-            width: 90%;
-            max-width: 650px;
-            max-height: 80vh;
-            border: 4px solid #000;
-            border-radius: 10px;
-            padding: 25px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            position: relative;
+            background: #fff; width: 90%; max-width: 650px; max-height: 80vh;
+            border: 4px solid #000; border-radius: 10px; padding: 25px;
+            box-sizing: border-box; overflow-y: auto; position: relative;
             box-shadow: 8px 8px 0 rgba(0,0,0,1);
-            font-family: Arial, sans-serif;
-            color: #333;
+            font-family: Arial, sans-serif; color: #333;
         }
         #modal-content h3 { color: #d32f2f; border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-top: 0;}
         #modal-content h4 { margin: 15px 0 5px 0; color: #111;}
@@ -147,25 +113,13 @@
         #modal-content p, #modal-content ul { line-height: 1.5; font-size: 15px; }
         #modal-content li { margin-bottom: 8px; }
         .close-btn {
-            display: block;
-            width: 100%;
-            margin-top: 20px;
-            padding: 12px;
-            background: #d32f2f;
-            color: white;
-            text-align: center;
-            font-weight: bold;
-            font-size: 16px;
-            border: 2px solid black;
-            border-radius: 5px;
-            cursor: pointer;
-            text-transform: uppercase;
+            display: block; width: 100%; margin-top: 20px; padding: 12px;
+            background: #d32f2f; color: white; text-align: center;
+            font-weight: bold; font-size: 16px; border: 2px solid black;
+            border-radius: 5px; cursor: pointer; text-transform: uppercase;
         }
         .close-btn:hover { background: #b71c1c; }
-
-        @media(min-width: 800px) {
-            #mobile-controls { display: none; }
-        }
+        @media(min-width: 800px) { #mobile-controls { display: none; } }
     </style>
 </head>
 <body>
@@ -174,14 +128,12 @@
         <div id="start-content">
             <h2>SEAN's INTERACTIVE RESUME</h2>
             <p><strong>Hi, I'm Sean David Sommer.</strong><br>I am a versatile professional with over a decade of experience in office operations, customer service, inventory management, and digital media production.</p>
-            
             <div class="controls-box">
                 <p style="margin: 0; color: #FFD700;"><strong>HOW TO PLAY</strong></p>
                 <p style="margin: 5px 0;"><strong>Desktop:</strong> Use W/A/S/D or Arrow Keys to move. SPACEBAR to jump.</p>
                 <p style="margin: 5px 0;"><strong>Mobile:</strong> Use the on-screen buttons to move and jump.</p>
-                <p style="margin: 5px 0; color: #32CD32;"><strong>Goal:</strong> Jump and bump the floating blocks from below to read my resume sections. Find all 5!</p>
+                <p style="margin: 5px 0; color: #32CD32;"><strong>Goal:</strong> Bump blocks to read sections of my resume, collect all 5 to power up, and grab the PDF at the end!</p>
             </div>
-
             <button class="start-btn" onclick="startGame()">START GAME</button>
         </div>
     </div>
@@ -210,106 +162,90 @@
     </div>
 
 <script>
-    // --- RESUME DATA ---
     const resumeData = {
-        summary: `
-            <h3>PROFESSIONAL SUMMARY</h3>
-            <p>I am a well-rounded professional with more than ten years of experience supporting office operations, customer service, inventory management, and business administration. My background spans fast-paced retail, warehouse, and compliance driven environments, including hands-on technical support and inventory management at Apple, high-volume inventory and merchandising work at Costco, and full-cycle operations for a California based compliance company. I am dependable, easy to work with, and committed to delivering high-quality service as part of a team.</p>
-        `,
-        skills: `
-            <h3>TECHNICAL SKILLS & CORE COMPETENCIES</h3>
-            <ul>
-                <li><strong>Customer Service:</strong> Conflict Resolution, Project Management Software, Client Relationship Management.</li>
-                <li><strong>Administration:</strong> Accounts Payable/Receivable, Inventory Management, Project Coordination, Human Resources.</li>
-                <li><strong>Inventory, Warehouse & Logistics:</strong> End-to-end inventory management, order processing, shipping and receiving, warehouse organization, cycle counts, and certified forklift operation for diesel truck filters and parts.</li>
-                <li><strong>Technical:</strong> MacOS & Windows Troubleshooting, Adobe Creative Suite (Audio/Video), Microsoft Office (Excel, Word).</li>
-                <li><strong>Remote Collaboration:</strong> Zoom, Slack, Microsoft Teams, Google Workspace, Dropbox.</li>
-            </ul>
-        `,
-        experience: `
-            <h3>PROFESSIONAL EXPERIENCE</h3>
-            <h4>Digital Media Producer & Community Manager | Self-Employed / Remote Vista, CA</h4>
-            <em>November 2017 – Present</em>
-            <p>Founded, developed, and managed a digital media brand focused on meditation and mental wellness, overseeing all aspects of production, marketing, and community engagement.</p>
-            <ul>
-                <li><strong>Content Production:</strong> Utilized advanced audio and video editing software to create high-quality digital content, growing a subscriber base through consistent output.</li>
-                <li><strong>Community Support:</strong> Managed all community interactions, responding to user comments and inquiries promptly and professionally to foster audience loyalty.</li>
-                <li><strong>Analytics & Strategy:</strong> Analyzed viewer data and engagement metrics to optimize content strategy, similar to analyzing customer satisfaction scores in a corporate environment.</li>
-                <li><strong>Remote Operations:</strong> Successfully designed, built, implemented and managed a fully remote workflow, demonstrating self-discipline, time management, and the ability to meet strict publication deadlines without supervision.</li>
-                <li><strong>Accounting & Tax Reporting:</strong> Maintained accurate financial records, tracked income and expenses, prepared reports for tax filing, and coordinated required documentation to support ongoing compliance as a self-employed business.</li>
-            </ul>
-            <hr>
-            <h4>General Manager & Office Administrator | Diesel Pollution Solutions, Inc. San Marcos, CA</h4>
-            <em>February 2011 – November 2017</em>
-            <p>Served as the operational lead for a compliance firm, managing office administration, finance, and client relations.</p>
-            <ul>
-                <li><strong>Office Administration:</strong> Directed daily business operations, including phone screening, scheduling, and digital record keeping for maintaining customer’s compliance for CARB.</li>
-                <li><strong>Financial Management:</strong> Managed Accounts Payable/Receivable, processed invoices, and handled payroll reporting using accounting software.</li>
-                <li><strong>Client Relations:</strong> Primary point of contact for key accounts, resolving complex client issues regarding California pollution regulations.</li>
-                <li><strong>Project Management:</strong> Responsible for technicians and compliance projects, ensuring all deliverables met strict state regulatory deadlines.</li>
-                <li><strong>Warehouse Management:</strong> Managed diesel truck filter and parts inventory from end to end, including ordering, stock control, and cycle counts. Handled shipping and receiving, organized warehouse layout, and safely operated forklifts as a certified operator.</li>
-            </ul>
-            <hr>
-            <h4>Operations Specialist | Apple Retail Carlsbad, CA</h4>
-            <em>August 2009 – 2011</em>
-            <p>Worked in a high-speed, technical environment for one of the world’s leading technology brands.</p>
-            <ul>
-                <li><strong>Inventory Control:</strong> Managed high-value inventory, shipping, and receiving processes with near-zero error rates.</li>
-                <li><strong>Technical Workflow:</strong> Utilized Apple proprietary software and handheld devices to track stock levels and fulfill customer orders efficiently.</li>
-                <li><strong>Team Collaboration:</strong> Communicated effectively with the sales and technical support teams (Genius Bar) to ensure seamless customer experiences.</li>
-            </ul>
-            <hr>
-            <h4>Merchandiser | Costco Wholesale Vista, CA</h4>
-            <em>November 2007 – 2009</em>
-            <p>Supported warehouse operations, working across the cooler and front-end areas to ensure efficient product flow and customer support.</p>
-            <ul>
-                <li>Maintained visual merchandising standards in a high-volume warehouse environment.</li>
-                <li>Consistently demonstrated reliability and efficiency in stocking and organizing products to maximize sales potential.</li>
-                <li>Operated safely in a fast-paced team environment, adhering to strict corporate safety protocols.</li>
-            </ul>
-        `,
-        education: `
-            <h3>EDUCATION</h3>
-            <p><strong>Associate Level Coursework | MiraCosta Community College</strong><br>
-            <em>2005 – 2007</em><br>
-            Focus: General Education</p>
-        `,
-        projects: `
-            <h3>PROJECTS & INTERESTS</h3>
-            <ul>
-                <li><strong>Audio/Video Engineering:</strong> Proficient in recording, mixing, and editing digital media.</li>
-                <li><strong>Web Development:</strong> Experience with website design and graphic layout.</li>
-                <li><strong>Music:</strong> Songwriting, recording, and guitar.</li>
-            </ul>
-        `
+        summary: `<h3>PROFESSIONAL SUMMARY</h3><p>I am a well-rounded professional with more than ten years of experience supporting office operations, customer service, inventory management, and business administration. My background spans fast-paced retail, warehouse, and compliance driven environments, including hands-on technical support and inventory management at Apple, high-volume inventory and merchandising work at Costco, and full-cycle operations for a California based compliance company. I am dependable, easy to work with, and committed to delivering high-quality service as part of a team.</p>`,
+        skills: `<h3>TECHNICAL SKILLS & CORE COMPETENCIES</h3><ul><li><strong>Customer Service:</strong> Conflict Resolution, Project Management Software, Client Relationship Management.</li><li><strong>Administration:</strong> Accounts Payable/Receivable, Inventory Management, Project Coordination, Human Resources.</li><li><strong>Inventory, Warehouse & Logistics:</strong> End-to-end inventory management, order processing, shipping and receiving, warehouse organization, cycle counts, and certified forklift operation for diesel truck filters and parts.</li><li><strong>Technical:</strong> MacOS & Windows Troubleshooting, Adobe Creative Suite (Audio/Video), Microsoft Office (Excel, Word).</li><li><strong>Remote Collaboration:</strong> Zoom, Slack, Microsoft Teams, Google Workspace, Dropbox.</li></ul>`,
+        experience: `<h3>PROFESSIONAL EXPERIENCE</h3><h4>Digital Media Producer & Community Manager | Self-Employed / Remote Vista, CA</h4><em>November 2017 – Present</em><p>Founded, developed, and managed a digital media brand focused on meditation and mental wellness, overseeing all aspects of production, marketing, and community engagement.</p><ul><li><strong>Content Production:</strong> Utilized advanced audio and video editing software to create high-quality digital content, growing a subscriber base through consistent output.</li><li><strong>Community Support:</strong> Managed all community interactions, responding to user comments and inquiries promptly and professionally to foster audience loyalty.</li><li><strong>Analytics & Strategy:</strong> Analyzed viewer data and engagement metrics to optimize content strategy, similar to analyzing customer satisfaction scores in a corporate environment.</li><li><strong>Remote Operations:</strong> Successfully designed, built, implemented and managed a fully remote workflow, demonstrating self-discipline, time management, and the ability to meet strict publication deadlines without supervision.</li><li><strong>Accounting & Tax Reporting:</strong> Maintained accurate financial records, tracked income and expenses, prepared reports for tax filing, and coordinated required documentation to support ongoing compliance as a self-employed business.</li></ul><hr><h4>General Manager & Office Administrator | Diesel Pollution Solutions, Inc. San Marcos, CA</h4><em>February 2011 – November 2017</em><p>Served as the operational lead for a compliance firm, managing office administration, finance, and client relations.</p><ul><li><strong>Office Administration:</strong> Directed daily business operations, including phone screening, scheduling, and digital record keeping for maintaining customer’s compliance for CARB.</li><li><strong>Financial Management:</strong> Managed Accounts Payable/Receivable, processed invoices, and handled payroll reporting using accounting software.</li><li><strong>Client Relations:</strong> Primary point of contact for key accounts, resolving complex client issues regarding California pollution regulations.</li><li><strong>Project Management:</strong> Responsible for technicians and compliance projects, ensuring all deliverables met strict state regulatory deadlines.</li><li><strong>Warehouse Management:</strong> Managed diesel truck filter and parts inventory from end to end, including ordering, stock control, and cycle counts. Handled shipping and receiving, organized warehouse layout, and safely operated forklifts as a certified operator.</li></ul><hr><h4>Operations Specialist | Apple Retail Carlsbad, CA</h4><em>August 2009 – 2011</em><p>Worked in a high-speed, technical environment for one of the world’s leading technology brands.</p><ul><li><strong>Inventory Control:</strong> Managed high-value inventory, shipping, and receiving processes with near-zero error rates.</li><li><strong>Technical Workflow:</strong> Utilized Apple proprietary software and handheld devices to track stock levels and fulfill customer orders efficiently.</li><li><strong>Team Collaboration:</strong> Communicated effectively with the sales and technical support teams (Genius Bar) to ensure seamless customer experiences.</li></ul><hr><h4>Merchandiser | Costco Wholesale Vista, CA</h4><em>November 2007 – 2009</em><p>Supported warehouse operations, working across the cooler and front-end areas to ensure efficient product flow and customer support.</p><ul><li>Maintained visual merchandising standards in a high-volume warehouse environment.</li><li>Consistently demonstrated reliability and efficiency in stocking and organizing products to maximize sales potential.</li><li>Operated safely in a fast-paced team environment, adhering to strict corporate safety protocols.</li></ul>`,
+        education: `<h3>EDUCATION</h3><p><strong>Associate Level Coursework | MiraCosta Community College</strong><br><em>2005 – 2007</em><br>Focus: General Education</p>`,
+        projects: `<h3>PROJECTS & INTERESTS</h3><ul><li><strong>Audio/Video Engineering:</strong> Proficient in recording, mixing, and editing digital media.</li><li><strong>Web Development:</strong> Experience with website design and graphic layout.</li><li><strong>Music:</strong> Songwriting, recording, and guitar.</li></ul>`
+    };
+
+    // --- 8-BIT AUDIO SYNTHESIZER ---
+    let audioCtx;
+    let bgmInterval;
+    let bgmIndex = 0;
+    const bgmNotes = [130.81, 196.00, 164.81, 196.00, 130.81, 196.00, 220.00, 246.94]; // Simple 8-bit bassline
+    
+    function initAudio() {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        bgmInterval = setInterval(playBGM, 200);
+    }
+
+    function playTone(freq, type, duration, vol=0.05, slideFreq=null) {
+        if(!audioCtx || audioCtx.state === 'suspended') return;
+        let osc = audioCtx.createOscillator();
+        let gain = audioCtx.createGain();
+        osc.type = type;
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        if(slideFreq) osc.frequency.exponentialRampToValueAtTime(slideFreq, audioCtx.currentTime + duration);
+        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    }
+
+    function playBGM() {
+        if(isPaused) return; // Don't play music when modal is open
+        playTone(bgmNotes[bgmIndex], 'triangle', 0.15, 0.03);
+        bgmIndex = (bgmIndex + 1) % bgmNotes.length;
+    }
+
+    const sfx = {
+        jump: () => playTone(150, 'square', 0.15, 0.05, 300),
+        bump: () => playTone(100, 'square', 0.1, 0.05),
+        block: () => playTone(800, 'square', 0.1, 0.05, 1200),
+        mushroomSpawn: () => {
+            playTone(300, 'square', 0.1);
+            setTimeout(()=>playTone(400, 'square', 0.1), 100);
+            setTimeout(()=>playTone(500, 'square', 0.2), 200);
+        },
+        grow: () => {
+            playTone(200, 'square', 0.1); setTimeout(()=>playTone(250, 'square', 0.1), 100);
+            setTimeout(()=>playTone(300, 'square', 0.1), 200); setTimeout(()=>playTone(350, 'square', 0.1), 300);
+            setTimeout(()=>playTone(400, 'square', 0.3), 400);
+        },
+        flagpole: () => playTone(600, 'square', 0.8, 0.05, 150),
+        castle: () => {
+            playTone(400, 'square', 0.1); setTimeout(()=>playTone(500, 'square', 0.1), 150);
+            setTimeout(()=>playTone(600, 'square', 0.4), 300);
+        }
     };
 
     // --- GAME ENGINE ---
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Expanded world width to fit the castle
     let worldWidth = 3200;
     let groundHeight = 60;
-    let isPaused = true; // Start Paused for Intro Screen
+    let isPaused = true;
     let cameraX = 0;
     let animationFrame = 0;
 
-    // Game Progress Variables
     let blocksCollected = 0;
     let isSliding = false;
     let flagGrabbed = false;
+    let pendingMushroomSpawn = null; // Tracks if a block needs to spit out a mushroom
 
-    // Player Object
     const player = {
-        x: 50, y: 100, w: 30, h: 40,
-        vx: 0, vy: 0,
-        speed: 6, jumpPower: -13, gravity: 0.6,
-        grounded: false, moving: false,
-        dir: 1 // 1 for right, -1 for left
+        x: 50, y: 100, baseW: 30, baseH: 40, w: 30, h: 40,
+        vx: 0, vy: 0, speed: 6, jumpPower: -13, gravity: 0.6,
+        grounded: false, moving: false, dir: 1, isBig: false
     };
 
-    // Define Level Blocks
+    const mushroom = { active: false, x: 0, y: 0, w: 20, h: 20, vx: 2, vy: 0 };
+
     const blocks = [
         { id: 'summary', text: 'SUMMARY', x: 250, y: 0, w: 120, h: 40, hitTimer: 0, color: '#F8B400', visited: false },
         { id: 'skills', text: 'SKILLS', x: 550, y: 0, w: 120, h: 40, hitTimer: 0, color: '#F8B400', visited: false },
@@ -321,9 +257,8 @@
 
     let stairs = [];
     let flagpole = { x: 2500, y: 0, w: 10, h: 300 };
-    let castleX = 2800; // Position of the end castle
+    let castleX = 2800; 
 
-    // Clouds array for scenery
     const clouds = [
         { x: 150, y: 80 }, { x: 500, y: 120 }, { x: 900, y: 60 },
         { x: 1400, y: 100 }, { x: 1800, y: 70 }, { x: 2200, y: 110 }, { x: 2600, y: 80 }, { x: 3000, y: 100 }
@@ -331,42 +266,27 @@
 
     const keys = { left: false, right: false, jump: false };
 
-    // --- INIT & START GAME ---
     window.startGame = function() {
         document.getElementById('start-overlay').style.display = 'none';
+        initAudio(); // Start sound engine upon interaction
         isPaused = false;
     }
 
-    // Set dynamic heights and generate stairs
     function resize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        
         let blockY = canvas.height - groundHeight - 160; 
         blocks.forEach(b => b.y = blockY);
-        
         flagpole.y = canvas.height - groundHeight - flagpole.h;
 
-        // Build Stairs
         stairs = [];
-        let startX = 2200;
-        let stepW = 40;
-        let stepH = 40;
-        let baseY = canvas.height - groundHeight;
-        
-        for (let i = 1; i <= 5; i++) {
-            stairs.push({
-                x: startX + (i - 1) * stepW,
-                y: baseY - (i * stepH),
-                w: stepW,
-                h: i * stepH
-            });
-        }
+        let startX = 2200; let stepW = 40; let stepH = 40; let baseY = canvas.height - groundHeight;
+        for (let i = 1; i <= 5; i++) stairs.push({ x: startX + (i - 1) * stepW, y: baseY - (i * stepH), w: stepW, h: i * stepH });
     }
     window.addEventListener('resize', resize);
     resize();
 
-    // --- INPUT HANDLING ---
+    // Input
     window.addEventListener('keydown', (e) => {
         if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = true;
         if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = true;
@@ -377,69 +297,47 @@
         if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = false;
         if (e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space') keys.jump = false;
     });
-
     const bindTouch = (id, key) => {
         const el = document.getElementById(id);
         el.addEventListener('touchstart', (e) => { e.preventDefault(); keys[key] = true; });
         el.addEventListener('touchend', (e) => { e.preventDefault(); keys[key] = false; });
     };
-    bindTouch('btn-left', 'left');
-    bindTouch('btn-right', 'right');
-    bindTouch('btn-jump', 'jump');
+    bindTouch('btn-left', 'left'); bindTouch('btn-right', 'right'); bindTouch('btn-jump', 'jump');
 
-    // --- LEVEL RESET FUNCTION ---
     function resetLevel() {
-        player.x = 50;
-        player.y = 100;
-        player.vx = 0;
-        player.vy = 0;
-        
-        blocksCollected = 0;
-        document.getElementById('score-display').innerText = `SECTIONS FOUND: 0 / 5`;
-        
+        sfx.castle();
+        player.x = 50; player.y = 100; player.vx = 0; player.vy = 0; player.isBig = false;
+        player.w = player.baseW; player.h = player.baseH;
+        blocksCollected = 0; document.getElementById('score-display').innerText = `SECTIONS FOUND: 0 / 5`;
         blocks.forEach(b => b.visited = false);
-        flagGrabbed = false;
-        isSliding = false;
-        
-        cameraX = 0; 
+        flagGrabbed = false; isSliding = false; cameraX = 0;
+        mushroom.active = false;
     }
 
-    // --- PHYSICS & LOGIC ---
     function update() {
         if (isPaused) return;
 
-        // FLAGPOLE SLIDING LOGIC
+        // Slide Logic
         if (isSliding) {
-            player.vy = 4; // Slide speed
-            player.y += player.vy;
-            
-            // Reached the bottom
+            player.vy = 4; player.y += player.vy;
             if (player.y + player.h >= canvas.height - groundHeight) {
                 player.y = canvas.height - groundHeight - player.h;
-                isSliding = false;
-                triggerFinalMessage();
+                isSliding = false; triggerFinalMessage();
             }
             cameraX = player.x - canvas.width / 2 + player.w / 2;
             if (cameraX > worldWidth - canvas.width) cameraX = worldWidth - canvas.width;
-            return; // Skip regular movement while sliding
+            return;
         }
 
         // Horizontal Movement
-        if (keys.left) { 
-            player.vx = -player.speed; player.moving = true; player.dir = -1; 
-        } else if (keys.right) { 
-            player.vx = player.speed; player.moving = true; player.dir = 1; 
-        } else { 
-            player.vx = 0; player.moving = false; 
-        }
+        if (keys.left) { player.vx = -player.speed; player.moving = true; player.dir = -1; } 
+        else if (keys.right) { player.vx = player.speed; player.moving = true; player.dir = 1; } 
+        else { player.vx = 0; player.moving = false; }
 
         player.x += player.vx;
-        
-        // World Bounds (Left / Right)
         if (player.x < 0) player.x = 0;
         if (player.x + player.w > worldWidth) player.x = worldWidth - player.w;
 
-        // Horizontal Collisions (Blocks & Stairs)
         const checkHorizontalCollisions = (arr) => {
             arr.forEach(b => {
                 if (isColliding(player, b)) {
@@ -448,80 +346,74 @@
                 }
             });
         };
-        checkHorizontalCollisions(blocks);
-        checkHorizontalCollisions(stairs);
+        checkHorizontalCollisions(blocks); checkHorizontalCollisions(stairs);
 
-        // Vertical Movement (Gravity & Jump)
+        // Vertical Movement & Jump
         if (keys.jump && player.grounded) {
-            player.vy = player.jumpPower;
-            player.grounded = false;
+            player.vy = player.jumpPower; player.grounded = false; sfx.jump();
         }
 
-        player.vy += player.gravity;
-        player.y += player.vy;
-        player.grounded = false;
+        player.vy += player.gravity; player.y += player.vy; player.grounded = false;
 
-        // Vertical Collisions (Stairs)
         stairs.forEach(s => {
             if (isColliding(player, s)) {
-                if (player.vy > 0) { // Landing on top
-                    player.y = s.y - player.h;
-                    player.vy = 0;
-                    player.grounded = true;
-                } else if (player.vy < 0) { // Hitting from below
-                    player.y = s.y + s.h;
-                    player.vy = 0;
-                }
+                if (player.vy > 0) { player.y = s.y - player.h; player.vy = 0; player.grounded = true; } 
+                else if (player.vy < 0) { player.y = s.y + s.h; player.vy = 0; sfx.bump(); }
             }
         });
 
-        // Vertical Collisions (Floating Blocks)
         blocks.forEach(b => {
             if (isColliding(player, b)) {
-                if (player.vy > 0) { 
-                    player.y = b.y - player.h;
-                    player.vy = 0;
-                    player.grounded = true;
-                } else if (player.vy < 0) { 
-                    player.y = b.y + b.h;
-                    player.vy = 0;
-                    hitBlock(b);
-                }
+                if (player.vy > 0) { player.y = b.y - player.h; player.vy = 0; player.grounded = true; } 
+                else if (player.vy < 0) { player.y = b.y + b.h; player.vy = 0; hitBlock(b); }
             }
         });
 
-        // Ground Collision
         if (player.y + player.h >= canvas.height - groundHeight) {
-            player.y = canvas.height - groundHeight - player.h;
-            player.vy = 0;
-            player.grounded = true;
+            player.y = canvas.height - groundHeight - player.h; player.vy = 0; player.grounded = true;
         }
 
-        // FLAGPOLE GRAB DETECTION
+        // Flagpole Grab
         if (!flagGrabbed && isColliding(player, flagpole)) {
-            flagGrabbed = true;
-            isSliding = true;
-            player.x = flagpole.x - player.w / 2; // Attach to pole
-            player.vx = 0;
-            player.vy = 0;
-            keys.left = keys.right = keys.jump = false; // Release keys
+            flagGrabbed = true; isSliding = true; sfx.flagpole();
+            player.x = flagpole.x - player.w / 2; player.vx = 0; player.vy = 0;
+            keys.left = keys.right = keys.jump = false;
         }
 
-        // CASTLE DOOR COLLISION (Reset Loop)
-        const doorLeft = castleX + 50;
-        const doorRight = castleX + 110;
-        if (player.x + player.w / 2 > doorLeft && player.x + player.w / 2 < doorRight && player.grounded) {
-            resetLevel();
+        // Castle Door
+        const doorLeft = castleX + 50; const doorRight = castleX + 110;
+        if (player.x + player.w / 2 > doorLeft && player.x + player.w / 2 < doorRight && player.grounded) resetLevel();
+
+        // Mushroom Logic
+        if (mushroom.active) {
+            mushroom.vy += player.gravity; // Gravity
+            mushroom.x += mushroom.vx; // Move right
+            mushroom.y += mushroom.vy;
+
+            // Ground collision
+            if (mushroom.y + mushroom.h >= canvas.height - groundHeight) {
+                mushroom.y = canvas.height - groundHeight - mushroom.h;
+                mushroom.vy = 0;
+            }
+
+            // Player grabs mushroom
+            if (isColliding(player, mushroom)) {
+                mushroom.active = false;
+                if (!player.isBig) {
+                    player.isBig = true;
+                    player.w = player.baseW * 1.5;
+                    player.h = player.baseH * 1.5;
+                    player.y -= (player.baseH * 0.5); // Adjust so he doesn't clip into ground
+                    sfx.grow();
+                }
+            }
         }
 
-        // Camera Follow
         cameraX = player.x - canvas.width / 2 + player.w / 2;
         if (cameraX < 0) cameraX = 0;
         if (cameraX > worldWidth - canvas.width) cameraX = worldWidth - canvas.width;
 
-        // Block animation decrement
         blocks.forEach(b => { if (b.hitTimer > 0) b.hitTimer--; });
-
         animationFrame++;
     }
 
@@ -530,25 +422,26 @@
     }
 
     function hitBlock(block) {
-        block.hitTimer = 10; // Visual bounce
+        block.hitTimer = 10;
         
-        // Handle Score Tracking
         if (!block.isPdf && !block.visited) {
+            sfx.block();
             block.visited = true;
             blocksCollected++;
             document.getElementById('score-display').innerText = `SECTIONS FOUND: ${blocksCollected} / 5`;
+            
+            if (blocksCollected === 5) {
+                pendingMushroomSpawn = block; // Queue up mushroom
+            }
+        } else {
+            sfx.bump();
         }
 
         if (block.isPdf) {
-            // Trigger PDF Download
             const link = document.createElement('a');
-            link.href = 'sean_sommer_resume.pdf';
-            link.download = 'sean_sommer_resume.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            link.href = 'sean_sommer_resume.pdf'; link.download = 'sean_sommer_resume.pdf';
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
         } else {
-            // Open Modal
             isPaused = true;
             document.getElementById('resume-text').innerHTML = resumeData[block.id];
             document.getElementById('modal-overlay').style.display = 'flex';
@@ -578,209 +471,137 @@
         document.getElementById('modal-overlay').style.display = 'none';
         keys.jump = false; 
         isPaused = false;
+
+        // Spawn mushroom if the 5th block was just hit
+        if (pendingMushroomSpawn) {
+            mushroom.active = true;
+            mushroom.x = pendingMushroomSpawn.x + (pendingMushroomSpawn.w / 2) - 10;
+            mushroom.y = pendingMushroomSpawn.y - 20; // Spawn above block
+            mushroom.vy = -5; // Small pop upward
+            sfx.mushroomSpawn();
+            pendingMushroomSpawn = null;
+        }
     }
 
     // --- DRAWING ---
     function drawCloud(x, y) {
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.beginPath();
-        ctx.arc(x, y, 20, 0, Math.PI * 2);
-        ctx.arc(x + 25, y - 10, 25, 0, Math.PI * 2);
-        ctx.arc(x + 50, y, 20, 0, Math.PI * 2);
-        ctx.arc(x + 25, y + 10, 25, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'; ctx.beginPath();
+        ctx.arc(x, y, 20, 0, Math.PI * 2); ctx.arc(x + 25, y - 10, 25, 0, Math.PI * 2);
+        ctx.arc(x + 50, y, 20, 0, Math.PI * 2); ctx.arc(x + 25, y + 10, 25, 0, Math.PI * 2); ctx.fill();
     }
 
     function drawFlagpole() {
-        // Pole
-        ctx.fillStyle = '#C0C0C0'; 
-        ctx.fillRect(flagpole.x, flagpole.y, flagpole.w, flagpole.h);
-        
-        // Flag ball on top
-        ctx.fillStyle = '#FFD700'; 
-        ctx.beginPath();
-        ctx.arc(flagpole.x + 5, flagpole.y - 5, 10, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Flag (Moves down if grabbed)
+        ctx.fillStyle = '#C0C0C0'; ctx.fillRect(flagpole.x, flagpole.y, flagpole.w, flagpole.h);
+        ctx.fillStyle = '#FFD700'; ctx.beginPath(); ctx.arc(flagpole.x + 5, flagpole.y - 5, 10, 0, Math.PI * 2); ctx.fill();
         let flagY = flagGrabbed ? (player.y - 10) : (flagpole.y + 10);
         if (flagY > flagpole.y + flagpole.h - 40) flagY = flagpole.y + flagpole.h - 40; 
-        
-        ctx.fillStyle = '#32CD32'; 
-        ctx.beginPath();
-        ctx.moveTo(flagpole.x + 10, flagY);
-        ctx.lineTo(flagpole.x + 60, flagY + 20);
-        ctx.lineTo(flagpole.x + 10, flagY + 40);
-        ctx.fill();
-        
-        // Castle Base
-        ctx.fillStyle = '#A0522D'; 
-        ctx.fillRect(flagpole.x - 20, flagpole.y + flagpole.h - 30, 50, 30);
+        ctx.fillStyle = '#32CD32'; ctx.beginPath(); ctx.moveTo(flagpole.x + 10, flagY); ctx.lineTo(flagpole.x + 60, flagY + 20); ctx.lineTo(flagpole.x + 10, flagY + 40); ctx.fill();
+        ctx.fillStyle = '#A0522D'; ctx.fillRect(flagpole.x - 20, flagpole.y + flagpole.h - 30, 50, 30);
     }
 
     function drawStairs() {
         stairs.forEach(s => {
-            ctx.fillStyle = '#C84C0C'; // Classic Brick Color
-            ctx.fillRect(s.x, s.y, s.w, s.h);
-            
-            // Draw grid lines to simulate individual blocks
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 2;
-            for(let stepY = s.y; stepY < s.y + s.h; stepY += 40) {
-                ctx.strokeRect(s.x, stepY, 40, 40);
-            }
+            ctx.fillStyle = '#C84C0C'; ctx.fillRect(s.x, s.y, s.w, s.h);
+            ctx.strokeStyle = '#000'; ctx.lineWidth = 2;
+            for(let stepY = s.y; stepY < s.y + s.h; stepY += 40) ctx.strokeRect(s.x, stepY, 40, 40);
         });
     }
 
     function drawCastle(x, yGround) {
-        // Main body
-        ctx.fillStyle = '#C84C0C'; 
-        ctx.fillRect(x, yGround - 150, 160, 150);
-        
-        // Left & Right Towers
-        ctx.fillRect(x - 20, yGround - 100, 40, 100);
-        ctx.fillRect(x + 140, yGround - 100, 40, 100);
-        
-        // Battlements (top details)
-        ctx.fillStyle = '#A0522D';
-        for(let i=0; i<4; i++) {
-            ctx.fillRect(x + 10 + i * 40, yGround - 170, 20, 20);
-        }
-        
-        // Brick details
-        ctx.fillStyle = '#A0522D';
-        ctx.fillRect(x + 20, yGround - 120, 30, 10);
-        ctx.fillRect(x + 80, yGround - 90, 30, 10);
-        ctx.fillRect(x + 40, yGround - 40, 20, 10);
-        ctx.fillRect(x + 110, yGround - 130, 30, 10);
-        
-        // Door
-        ctx.fillStyle = '#000';
+        ctx.fillStyle = '#C84C0C'; ctx.fillRect(x, yGround - 150, 160, 150);
+        ctx.fillRect(x - 20, yGround - 100, 40, 100); ctx.fillRect(x + 140, yGround - 100, 40, 100);
+        ctx.fillStyle = '#A0522D'; for(let i=0; i<4; i++) ctx.fillRect(x + 10 + i * 40, yGround - 170, 20, 20);
+        ctx.fillRect(x + 20, yGround - 120, 30, 10); ctx.fillRect(x + 80, yGround - 90, 30, 10);
+        ctx.fillRect(x + 40, yGround - 40, 20, 10); ctx.fillRect(x + 110, yGround - 130, 30, 10);
+        ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(x + 80, yGround - 40, 30, Math.PI, 0); ctx.lineTo(x + 110, yGround); ctx.lineTo(x + 50, yGround); ctx.fill();
+    }
+
+    function drawMushroom() {
+        if (!mushroom.active) return;
+        ctx.fillStyle = '#fff'; // stem
+        ctx.fillRect(mushroom.x + 4, mushroom.y + 10, 12, 10);
+        ctx.fillStyle = '#ff0000'; // cap
         ctx.beginPath();
-        ctx.arc(x + 80, yGround - 40, 30, Math.PI, 0); // Arched top
-        ctx.lineTo(x + 110, yGround);
-        ctx.lineTo(x + 50, yGround);
+        ctx.arc(mushroom.x + 10, mushroom.y + 10, 10, Math.PI, 0);
         ctx.fill();
+        ctx.fillStyle = '#fff'; // spots
+        ctx.fillRect(mushroom.x + 4, mushroom.y + 4, 4, 4);
+        ctx.fillRect(mushroom.x + 12, mushroom.y + 4, 4, 4);
     }
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
         ctx.save();
         ctx.translate(-cameraX, 0);
 
-        // Draw Clouds
         clouds.forEach(c => drawCloud(c.x, c.y));
 
-        // Draw Scenery Text
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-        ctx.font = '24px Courier New';
-        ctx.fontWeight = 'bold';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'; ctx.font = '24px Courier New'; ctx.fontWeight = 'bold';
         ctx.fillText("Hit the blocks from below to read!", 50, canvas.height / 2 - 10);
         ctx.fillText("Keep going right! ➡", 1000, canvas.height / 2);
-        ctx.fillStyle = '#32CD32';
-        ctx.fillText("Hit to Download PDF ⬇", 1900, canvas.height / 2 - 50);
-        
-        ctx.fillStyle = '#FFF';
-        ctx.fillText("Enter to Loop ➡", castleX - 100, canvas.height / 2 - 20);
+        ctx.fillStyle = '#32CD32'; ctx.fillText("Hit to Download PDF ⬇", 1900, canvas.height / 2 - 50);
+        ctx.fillStyle = '#FFF'; ctx.fillText("Enter to Loop ➡", castleX - 100, canvas.height / 2 - 20);
 
-        drawStairs();
-        drawFlagpole();
-        drawCastle(castleX, canvas.height - groundHeight);
+        drawStairs(); drawFlagpole(); drawCastle(castleX, canvas.height - groundHeight); drawMushroom();
 
-        // Draw Ground
-        ctx.fillStyle = '#8B4513'; // Dirt
-        ctx.fillRect(0, canvas.height - groundHeight, worldWidth, groundHeight);
-        ctx.fillStyle = '#228B22'; // Grass
-        ctx.fillRect(0, canvas.height - groundHeight, worldWidth, 15);
+        ctx.fillStyle = '#8B4513'; ctx.fillRect(0, canvas.height - groundHeight, worldWidth, groundHeight);
+        ctx.fillStyle = '#228B22'; ctx.fillRect(0, canvas.height - groundHeight, worldWidth, 15);
 
-        // Draw Floating Blocks
         blocks.forEach(b => {
             let drawY = b.y - (b.hitTimer > 5 ? 10 - b.hitTimer : b.hitTimer);
-            
             ctx.fillStyle = b.visited ? '#8B4513' : (b.hitTimer > 0 ? '#b5651d' : b.color);
             ctx.fillRect(b.x, drawY, b.w, b.h);
-            
-            ctx.lineWidth = 4;
-            ctx.strokeStyle = '#000';
-            ctx.strokeRect(b.x, drawY, b.w, b.h);
-            
+            ctx.lineWidth = 4; ctx.strokeStyle = '#000'; ctx.strokeRect(b.x, drawY, b.w, b.h);
             ctx.fillStyle = (b.isPdf && b.hitTimer === 0) ? '#FFF' : (b.visited ? '#CCC' : '#000');
-            ctx.font = 'bold 18px Courier New';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
+            ctx.font = 'bold 18px Courier New'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             ctx.fillText(b.text, b.x + b.w / 2, drawY + b.h / 2);
         });
 
-        // Draw Player
-        drawPlayer(player.x, player.y, player.dir);
-
+        drawPlayer(player.x, player.y, player.dir, player.isBig);
         ctx.restore();
     }
 
-    function drawPlayer(x, y, dir) {
+    function drawPlayer(x, y, dir, isBig) {
+        ctx.save();
+        ctx.translate(x, y);
+        if (isBig) ctx.scale(1.5, 1.5); // Scale drawing by 1.5x if big
+        
         // Shirt/Overalls
-        ctx.fillStyle = '#0000FF'; 
-        ctx.fillRect(x + 6, y + 20, 18, 14);
-        
+        ctx.fillStyle = '#0000FF'; ctx.fillRect(6, 20, 18, 14);
         // Face
-        ctx.fillStyle = '#FFDAB9'; 
-        ctx.fillRect(x + 4, y + 8, 22, 12);
-        
+        ctx.fillStyle = '#FFDAB9'; ctx.fillRect(4, 8, 22, 12);
         // Hat
-        ctx.fillStyle = '#FF0000'; 
-        ctx.fillRect(x + 2, y, 22, 8);
+        ctx.fillStyle = '#FF0000'; ctx.fillRect(2, 0, 22, 8);
         
         // Directional rendering
         if (isSliding) {
-            ctx.fillRect(x + 24, y + 4, 8, 4); 
-            ctx.fillStyle = '#000';
-            ctx.fillRect(x + 20, y + 10, 4, 4); 
+            ctx.fillRect(24, 4, 8, 4); ctx.fillStyle = '#000'; ctx.fillRect(20, 10, 4, 4); 
         } else if (dir === 1) { 
-            ctx.fillRect(x + 24, y + 4, 8, 4); 
-            ctx.fillStyle = '#000';
-            ctx.fillRect(x + 20, y + 10, 4, 4); 
-            ctx.fillRect(x + 18, y + 16, 10, 4); 
+            ctx.fillRect(24, 4, 8, 4); ctx.fillStyle = '#000'; ctx.fillRect(20, 10, 4, 4); ctx.fillRect(18, 16, 10, 4); 
         } else { 
-            ctx.fillRect(x - 2, y + 4, 8, 4); 
-            ctx.fillStyle = '#000';
-            ctx.fillRect(x + 6, y + 10, 4, 4); 
-            ctx.fillRect(x + 2, y + 16, 10, 4); 
+            ctx.fillRect(-2, 4, 8, 4); ctx.fillStyle = '#000'; ctx.fillRect(6, 10, 4, 4); ctx.fillRect(2, 16, 10, 4); 
         }
 
         // Arms
         ctx.fillStyle = '#FF0000';
-        if (isSliding) {
-            ctx.fillRect(x + 15, y + 20, 15, 6); 
-        } else {
-            ctx.fillRect(x, y + 20, 6, 10);
-            ctx.fillRect(x + 24, y + 20, 6, 10);
-        }
+        if (isSliding) { ctx.fillRect(15, 20, 15, 6); } 
+        else { ctx.fillRect(0, 20, 6, 10); ctx.fillRect(24, 20, 6, 10); }
 
         // Legs
         ctx.fillStyle = '#8B4513'; 
-        if (isSliding) {
-            ctx.fillRect(x + 10, y + 34, 15, 6); 
-        } else if (!player.grounded) {
-            ctx.fillRect(x + 2, y + 34, 10, 6);
-            ctx.fillRect(x + 18, y + 30, 10, 6);
-        } else if (player.moving && Math.floor(animationFrame / 5) % 2 === 0) {
-            ctx.fillRect(x + 8, y + 34, 10, 6);
-            ctx.fillRect(x + 20, y + 32, 10, 6);
-        } else {
-            ctx.fillRect(x + 4, y + 34, 10, 6);
-            ctx.fillRect(x + 16, y + 34, 10, 6);
-        }
+        if (isSliding) { ctx.fillRect(10, 34, 15, 6); } 
+        else if (!player.grounded) { ctx.fillRect(2, 34, 10, 6); ctx.fillRect(18, 30, 10, 6); } 
+        else if (player.moving && Math.floor(animationFrame / 5) % 2 === 0) { ctx.fillRect(8, 34, 10, 6); ctx.fillRect(20, 32, 10, 6); } 
+        else { ctx.fillRect(4, 34, 10, 6); ctx.fillRect(16, 34, 10, 6); }
+        
+        ctx.restore();
     }
 
-    // --- GAME LOOP ---
     function loop() {
         update();
         draw();
         requestAnimationFrame(loop);
     }
-    
-    // Start Game
     loop();
 
 </script>
