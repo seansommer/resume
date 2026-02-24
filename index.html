@@ -28,7 +28,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.6);
             color: white;
             text-align: center;
             padding: 10px 0;
@@ -36,8 +36,7 @@
             pointer-events: none;
         }
         #hud h1 { margin: 0; font-size: 22px; letter-spacing: 1px; }
-        #hud p { margin: 5px 0 5px 0; font-size: 14px; color: #ffcc00;}
-        #score-display { margin: 0; font-size: 18px; font-weight: bold; color: #32CD32; }
+        #hud p { margin: 5px 0 0 0; font-size: 14px; color: #ffcc00;}
 
         /* Mobile On-Screen Controls */
         #mobile-controls {
@@ -115,6 +114,7 @@
         }
         .close-btn:hover { background: #b71c1c; }
 
+        /* Hide mobile controls on larger screens */
         @media(min-width: 800px) {
             #mobile-controls { display: none; }
         }
@@ -125,7 +125,6 @@
     <div id="hud">
         <h1>SEAN DAVID SOMMER</h1>
         <p>Vista, CA 92083 | 760-420-1807 | MusicManSean@me.com</p>
-        <div id="score-display">SECTIONS FOUND: 0 / 5</div>
     </div>
 
     <canvas id="gameCanvas"></canvas>
@@ -224,72 +223,37 @@
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
-    let worldWidth = 2700;
+    let worldWidth = 1800;
     let groundHeight = 60;
     let isPaused = false;
     let cameraX = 0;
     let animationFrame = 0;
-
-    // Game Progress Variables
-    let blocksCollected = 0;
-    let isSliding = false;
-    let flagGrabbed = false;
 
     // Player Object
     const player = {
         x: 50, y: 100, w: 30, h: 40,
         vx: 0, vy: 0,
         speed: 6, jumpPower: -13, gravity: 0.6,
-        grounded: false, moving: false,
-        dir: 1 // 1 for right, -1 for left
+        grounded: false, moving: false
     };
 
     // Define Level Blocks
     const blocks = [
-        { id: 'summary', text: 'SUMMARY', x: 250, y: 0, w: 120, h: 40, hitTimer: 0, color: '#F8B400', visited: false },
-        { id: 'skills', text: 'SKILLS', x: 550, y: 0, w: 120, h: 40, hitTimer: 0, color: '#F8B400', visited: false },
-        { id: 'experience', text: 'EXPERIENCE', x: 850, y: 0, w: 150, h: 40, hitTimer: 0, color: '#F8B400', visited: false },
-        { id: 'education', text: 'EDUCATION', x: 1200, y: 0, w: 130, h: 40, hitTimer: 0, color: '#F8B400', visited: false },
-        { id: 'projects', text: 'PROJECTS', x: 1550, y: 0, w: 130, h: 40, hitTimer: 0, color: '#F8B400', visited: false },
-        { id: 'pdf', text: 'DOWNLOAD PDF', x: 1950, y: 0, w: 160, h: 40, hitTimer: 0, color: '#32CD32', isPdf: true }
-    ];
-
-    let stairs = [];
-    let flagpole = { x: 2500, y: 0, w: 10, h: 300 };
-
-    // Clouds array for scenery
-    const clouds = [
-        { x: 150, y: 80 }, { x: 500, y: 120 }, { x: 900, y: 60 },
-        { x: 1400, y: 100 }, { x: 1800, y: 70 }, { x: 2200, y: 110 }, { x: 2500, y: 80 }
+        { id: 'summary', text: 'SUMMARY', x: 250, y: 0, w: 120, h: 40, hitTimer: 0 },
+        { id: 'skills', text: 'SKILLS', x: 550, y: 0, w: 120, h: 40, hitTimer: 0 },
+        { id: 'experience', text: 'EXPERIENCE', x: 850, y: 0, w: 150, h: 40, hitTimer: 0 },
+        { id: 'education', text: 'EDUCATION', x: 1200, y: 0, w: 130, h: 40, hitTimer: 0 },
+        { id: 'projects', text: 'PROJECTS', x: 1550, y: 0, w: 130, h: 40, hitTimer: 0 }
     ];
 
     const keys = { left: false, right: false, jump: false };
 
-    // Set dynamic heights and generate stairs
+    // Set dynamic block heights based on screen size
     function resize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        
         let blockY = canvas.height - groundHeight - 160; 
         blocks.forEach(b => b.y = blockY);
-        
-        flagpole.y = canvas.height - groundHeight - flagpole.h;
-
-        // Build Stairs
-        stairs = [];
-        let startX = 2200;
-        let stepW = 40;
-        let stepH = 40;
-        let baseY = canvas.height - groundHeight;
-        
-        for (let i = 1; i <= 5; i++) {
-            stairs.push({
-                x: startX + (i - 1) * stepW,
-                y: baseY - (i * stepH),
-                w: stepW,
-                h: i * stepH
-            });
-        }
     }
     window.addEventListener('resize', resize);
     resize();
@@ -306,6 +270,7 @@
         if (e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space') keys.jump = false;
     });
 
+    // Touch controls
     const bindTouch = (id, key) => {
         const el = document.getElementById(id);
         el.addEventListener('touchstart', (e) => { e.preventDefault(); keys[key] = true; });
@@ -319,30 +284,10 @@
     function update() {
         if (isPaused) return;
 
-        // FLAGPOLE SLIDING LOGIC
-        if (isSliding) {
-            player.vy = 4; // Slide speed
-            player.y += player.vy;
-            
-            // Reached the bottom
-            if (player.y + player.h >= canvas.height - groundHeight) {
-                player.y = canvas.height - groundHeight - player.h;
-                isSliding = false;
-                triggerFinalMessage();
-            }
-            cameraX = player.x - canvas.width / 2 + player.w / 2;
-            if (cameraX > worldWidth - canvas.width) cameraX = worldWidth - canvas.width;
-            return; // Skip regular movement while sliding
-        }
-
         // Horizontal Movement
-        if (keys.left) { 
-            player.vx = -player.speed; player.moving = true; player.dir = -1; 
-        } else if (keys.right) { 
-            player.vx = player.speed; player.moving = true; player.dir = 1; 
-        } else { 
-            player.vx = 0; player.moving = false; 
-        }
+        if (keys.left) { player.vx = -player.speed; player.moving = true; }
+        else if (keys.right) { player.vx = player.speed; player.moving = true; }
+        else { player.vx = 0; player.moving = false; }
 
         player.x += player.vx;
         
@@ -350,17 +295,13 @@
         if (player.x < 0) player.x = 0;
         if (player.x + player.w > worldWidth) player.x = worldWidth - player.w;
 
-        // Horizontal Collisions (Blocks & Stairs)
-        const checkHorizontalCollisions = (arr) => {
-            arr.forEach(b => {
-                if (isColliding(player, b)) {
-                    if (player.vx > 0) player.x = b.x - player.w;
-                    else if (player.vx < 0) player.x = b.x + b.w;
-                }
-            });
-        };
-        checkHorizontalCollisions(blocks);
-        checkHorizontalCollisions(stairs);
+        // Horizontal Collisions with blocks
+        blocks.forEach(b => {
+            if (isColliding(player, b)) {
+                if (player.vx > 0) player.x = b.x - player.w;
+                else if (player.vx < 0) player.x = b.x + b.w;
+            }
+        });
 
         // Vertical Movement (Gravity & Jump)
         if (keys.jump && player.grounded) {
@@ -372,28 +313,14 @@
         player.y += player.vy;
         player.grounded = false;
 
-        // Vertical Collisions (Stairs)
-        stairs.forEach(s => {
-            if (isColliding(player, s)) {
-                if (player.vy > 0) { // Landing on top
-                    player.y = s.y - player.h;
-                    player.vy = 0;
-                    player.grounded = true;
-                } else if (player.vy < 0) { // Hitting from below
-                    player.y = s.y + s.h;
-                    player.vy = 0;
-                }
-            }
-        });
-
-        // Vertical Collisions (Floating Blocks)
+        // Vertical Collisions with blocks
         blocks.forEach(b => {
             if (isColliding(player, b)) {
-                if (player.vy > 0) { 
+                if (player.vy > 0) { // Landing on top
                     player.y = b.y - player.h;
                     player.vy = 0;
                     player.grounded = true;
-                } else if (player.vy < 0) { 
+                } else if (player.vy < 0) { // Hitting from below
                     player.y = b.y + b.h;
                     player.vy = 0;
                     hitBlock(b);
@@ -406,16 +333,6 @@
             player.y = canvas.height - groundHeight - player.h;
             player.vy = 0;
             player.grounded = true;
-        }
-
-        // FLAGPOLE GRAB DETECTION
-        if (!flagGrabbed && isColliding(player, flagpole)) {
-            flagGrabbed = true;
-            isSliding = true;
-            player.x = flagpole.x - player.w / 2; // Attach to pole
-            player.vx = 0;
-            player.vy = 0;
-            keys.left = keys.right = keys.jump = false; // Release keys
         }
 
         // Camera Follow
@@ -435,126 +352,31 @@
 
     function hitBlock(block) {
         block.hitTimer = 10; // Visual bounce
-        
-        // Handle Score Tracking
-        if (!block.isPdf && !block.visited) {
-            block.visited = true;
-            blocksCollected++;
-            document.getElementById('score-display').innerText = `SECTIONS FOUND: ${blocksCollected} / 5`;
-        }
-
-        if (block.isPdf) {
-            // Trigger PDF Download
-            const link = document.createElement('a');
-            link.href = 'sean_sommer_resume.pdf';
-            link.download = 'sean_sommer_resume.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        } else {
-            // Open Modal
-            isPaused = true;
-            document.getElementById('resume-text').innerHTML = resumeData[block.id];
-            document.getElementById('modal-overlay').style.display = 'flex';
-        }
-    }
-
-    function triggerFinalMessage() {
         isPaused = true;
-        const finalHTML = `
-            <div style="text-align: center; padding: 10px;">
-                <h2 style="color: #32CD32; font-size: 28px; margin-bottom: 15px; font-family: 'Courier New', monospace;">LEVEL COMPLETE!</h2>
-                <h3 style="color: #111; font-size: 22px; margin-top: 0; border: none;">When can I interview and start?</h3>
-                <p style="font-size: 16px; color: #444;">Thank you for taking the time to review my interactive resume.</p>
-                <div style="background: #f4f4f4; padding: 20px; border-radius: 8px; display: inline-block; margin-top: 15px; border: 3px solid #000;">
-                    <strong style="font-size: 18px;">Contact Information:</strong><br><br>
-                    <strong>Phone:</strong> 760-420-1807<br>
-                    <strong>Email:</strong> <a href="mailto:MusicManSean@me.com" style="color: #d32f2f; text-decoration: none; font-weight: bold;">MusicManSean@me.com</a>
-                </div>
-            </div>
-        `;
-        document.getElementById('resume-text').innerHTML = finalHTML;
+        document.getElementById('resume-text').innerHTML = resumeData[block.id];
         document.getElementById('modal-overlay').style.display = 'flex';
     }
 
     window.closeModal = function() {
         document.getElementById('modal-overlay').style.display = 'none';
-        keys.jump = false; 
+        keys.jump = false; // Prevent accidental double jumps
         isPaused = false;
     }
 
     // --- DRAWING ---
-    function drawCloud(x, y) {
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.beginPath();
-        ctx.arc(x, y, 20, 0, Math.PI * 2);
-        ctx.arc(x + 25, y - 10, 25, 0, Math.PI * 2);
-        ctx.arc(x + 50, y, 20, 0, Math.PI * 2);
-        ctx.arc(x + 25, y + 10, 25, 0, Math.PI * 2);
-        ctx.fill();
-    }
-
-    function drawFlagpole() {
-        // Pole
-        ctx.fillStyle = '#C0C0C0'; 
-        ctx.fillRect(flagpole.x, flagpole.y, flagpole.w, flagpole.h);
-        
-        // Flag ball on top
-        ctx.fillStyle = '#FFD700'; 
-        ctx.beginPath();
-        ctx.arc(flagpole.x + 5, flagpole.y - 5, 10, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Flag (Moves down if grabbed)
-        let flagY = flagGrabbed ? (player.y - 10) : (flagpole.y + 10);
-        if (flagY > flagpole.y + flagpole.h - 40) flagY = flagpole.y + flagpole.h - 40; // Stop flag at bottom
-        
-        ctx.fillStyle = '#32CD32'; 
-        ctx.beginPath();
-        ctx.moveTo(flagpole.x + 10, flagY);
-        ctx.lineTo(flagpole.x + 60, flagY + 20);
-        ctx.lineTo(flagpole.x + 10, flagY + 40);
-        ctx.fill();
-        
-        // Castle Base
-        ctx.fillStyle = '#A0522D'; 
-        ctx.fillRect(flagpole.x - 20, flagpole.y + flagpole.h - 30, 50, 30);
-    }
-
-    function drawStairs() {
-        stairs.forEach(s => {
-            ctx.fillStyle = '#C84C0C'; // Classic Brick Color
-            ctx.fillRect(s.x, s.y, s.w, s.h);
-            
-            // Draw grid lines to simulate individual blocks
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 2;
-            for(let stepY = s.y; stepY < s.y + s.h; stepY += 40) {
-                ctx.strokeRect(s.x, stepY, 40, 40);
-            }
-        });
-    }
-
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         ctx.save();
         ctx.translate(-cameraX, 0);
 
-        // Draw Clouds
-        clouds.forEach(c => drawCloud(c.x, c.y));
-
-        // Draw Scenery Text
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        // Draw Scenery (Background Instructions & Clouds)
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
         ctx.font = '24px Courier New';
         ctx.fontWeight = 'bold';
+        ctx.fillText("Use Arrow Keys to Move, SPACE to Jump.", 50, canvas.height / 2 - 50);
         ctx.fillText("Hit the blocks from below to read!", 50, canvas.height / 2 - 10);
         ctx.fillText("Keep going right! ➡", 1000, canvas.height / 2);
-        ctx.fillStyle = '#32CD32';
-        ctx.fillText("Hit to Download PDF ⬇", 1900, canvas.height / 2 - 50);
-
-        drawStairs();
-        drawFlagpole();
 
         // Draw Ground
         ctx.fillStyle = '#8B4513'; // Dirt
@@ -562,80 +384,70 @@
         ctx.fillStyle = '#228B22'; // Grass
         ctx.fillRect(0, canvas.height - groundHeight, worldWidth, 15);
 
-        // Draw Floating Blocks
+        // Draw Blocks
         blocks.forEach(b => {
-            let drawY = b.y - (b.hitTimer > 5 ? 10 - b.hitTimer : b.hitTimer);
+            let drawY = b.y - (b.hitTimer > 5 ? 10 - b.hitTimer : b.hitTimer); // bounce effect
             
-            ctx.fillStyle = b.visited ? '#8B4513' : (b.hitTimer > 0 ? '#b5651d' : b.color);
+            // Block background
+            ctx.fillStyle = b.hitTimer > 0 ? '#b5651d' : '#F8B400';
             ctx.fillRect(b.x, drawY, b.w, b.h);
             
+            // Block border/shadow
             ctx.lineWidth = 4;
             ctx.strokeStyle = '#000';
             ctx.strokeRect(b.x, drawY, b.w, b.h);
             
-            ctx.fillStyle = (b.isPdf && b.hitTimer === 0) ? '#FFF' : (b.visited ? '#CCC' : '#000');
+            // Block Text
+            ctx.fillStyle = '#000';
             ctx.font = 'bold 18px Courier New';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText(b.text, b.x + b.w / 2, drawY + b.h / 2);
         });
 
-        // Draw Player
-        drawPlayer(player.x, player.y, player.dir);
+        // Draw Player (8-bit style representation)
+        drawPlayer(player.x, player.y);
 
         ctx.restore();
     }
 
-    function drawPlayer(x, y, dir) {
+    function drawPlayer(x, y) {
+        // A simple pixelated character using rectangles
         // Shirt/Overalls
-        ctx.fillStyle = '#0000FF'; 
+        ctx.fillStyle = '#0000FF'; // Blue
         ctx.fillRect(x + 6, y + 20, 18, 14);
         
         // Face
-        ctx.fillStyle = '#FFDAB9'; 
+        ctx.fillStyle = '#FFDAB9'; // Peach
         ctx.fillRect(x + 4, y + 8, 22, 12);
         
         // Hat
-        ctx.fillStyle = '#FF0000'; 
+        ctx.fillStyle = '#FF0000'; // Red
         ctx.fillRect(x + 2, y, 22, 8);
-        
-        // Directional rendering
-        if (isSliding) {
-            ctx.fillRect(x + 24, y + 4, 8, 4); 
-            ctx.fillStyle = '#000';
-            ctx.fillRect(x + 20, y + 10, 4, 4); 
-        } else if (dir === 1) { 
-            ctx.fillRect(x + 24, y + 4, 8, 4); 
-            ctx.fillStyle = '#000';
-            ctx.fillRect(x + 20, y + 10, 4, 4); 
-            ctx.fillRect(x + 18, y + 16, 10, 4); 
-        } else { 
-            ctx.fillRect(x - 2, y + 4, 8, 4); 
-            ctx.fillStyle = '#000';
-            ctx.fillRect(x + 6, y + 10, 4, 4); 
-            ctx.fillRect(x + 2, y + 16, 10, 4); 
-        }
+        ctx.fillRect(x + 24, y + 4, 8, 4); // Hat brim
+
+        // Eye/Mustache
+        ctx.fillStyle = '#000';
+        ctx.fillRect(x + 20, y + 10, 4, 4); // Eye
+        ctx.fillRect(x + 18, y + 16, 10, 4); // Mustache
 
         // Arms
         ctx.fillStyle = '#FF0000';
-        if (isSliding) {
-            ctx.fillRect(x + 15, y + 20, 15, 6); // Arm reaching for pole
-        } else {
-            ctx.fillRect(x, y + 20, 6, 10);
-            ctx.fillRect(x + 24, y + 20, 6, 10);
-        }
+        ctx.fillRect(x, y + 20, 6, 10);
+        ctx.fillRect(x + 24, y + 20, 6, 10);
 
-        // Legs
-        ctx.fillStyle = '#8B4513'; 
-        if (isSliding) {
-            ctx.fillRect(x + 10, y + 34, 15, 6); // Legs gripping
-        } else if (!player.grounded) {
+        // Legs (Animated if moving and grounded)
+        ctx.fillStyle = '#8B4513'; // Brown Shoes
+        if (!player.grounded) {
+            // Jumping pose
             ctx.fillRect(x + 2, y + 34, 10, 6);
             ctx.fillRect(x + 18, y + 30, 10, 6);
         } else if (player.moving && Math.floor(animationFrame / 5) % 2 === 0) {
+            // Running frame 1
             ctx.fillRect(x + 8, y + 34, 10, 6);
             ctx.fillRect(x + 20, y + 32, 10, 6);
         } else {
+            // Standing or Running frame 2
             ctx.fillRect(x + 4, y + 34, 10, 6);
             ctx.fillRect(x + 16, y + 34, 10, 6);
         }
